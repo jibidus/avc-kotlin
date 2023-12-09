@@ -20,6 +20,9 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  */
 fun Any?.println() = println(this)
 
-fun String.firstDigit() = find { it.isDigit() }
+fun checkThat(actual: Int) = ActualValue(actual)
 
-fun String.lastDigit() = findLast { it.isDigit() }
+class ActualValue(private val actual: Int) {
+    fun isEqualTo(expected: Int) =
+        check(expected == actual) { "Actual value $actual is not equal to expected value: $expected" }
+}
