@@ -13,3 +13,7 @@ tasks {
         gradleVersion = "8.5"
     }
 }
+
+dependencies{
+    implementation("ch.tutteli.atrium:atrium-fluent:1.1.0")
+}
