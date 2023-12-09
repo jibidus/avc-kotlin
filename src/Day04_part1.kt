@@ -32,6 +32,6 @@ class Card(input: String) {
     val values = input.substringAfter(":").split("|")
     val winningNumbers = values[0].trim().split("\\s+".toRegex())
     val availableNumbers = values[1].trim().split("\\s+".toRegex())
-    val nbWins = availableNumbers.count { winningNumbers.contains(it) }
-    val points:Int = 2.0.pow(nbWins-1).toInt()
+    val nbMatchingCards = availableNumbers.count { winningNumbers.contains(it) }
+    val points:Int = 2.0.pow(nbMatchingCards-1).toInt()
 }
