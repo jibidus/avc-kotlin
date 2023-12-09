@@ -74,24 +74,55 @@ class Engine(val visualRepresentation: List<String>) {
     val numbers = visualRepresentation.flatMapIndexed { y, str -> str.findNumbers().map { Number(it.value, it.range, y,  this) } }
     val partNumbers = numbers.filter { it.isAdjacentToASymbol }
 
+    val stars = visualRepresentation.flatMapIndexed { y, str -> str.findStars().map { Star(it.value, it.range.first, y,  this) } }
+    val gearRatios = stars.map { it.findNumbersAdjacents(partNumbers)}.filter{it.size==2}.map{ it.first().valueAsInt * it.last().valueAsInt}
     fun pieceAt(x: Int, y: Int) = visualRepresentation[y][x]
 
     private fun String.findNumbers()  = "\\d+".toRegex().findAll(this)
+    private fun String.findStars()  = "\\*".toRegex().findAll(this)
 }
 
-class Number(val value: String, val xRange: IntRange, val y: Int, engine: Engine) {
-    val adjacentPieces = HorizontalRange(xRange, y, engine).adjacentCoordinates.map { it.piece}
+class Star(val value: String, val x: Int, val y: Int, engine: Engine){
+    val coordinate = Coordinate(x,y,engine)
+
+    fun findNumbersAdjacents(partNumbers: List<Number>) =
+        partNumbers.filter { it.isAdjacentTo(coordinate) }
+}
+
+class Number(val value: String, xRange: IntRange, y: Int, engine: Engine) {
+    val adjacentCoordinates = HorizontalRange(xRange, y, engine).adjacentCoordinates
+    val adjacentPieces = adjacentCoordinates.map { it.piece}
     val isAdjacentToASymbol = adjacentPieces.any { it.isASymbol }
+    val valueAsInt = value.toInt()
+
+    fun isAdjacentTo(coordinate: Coordinate) = adjacentCoordinates.contains(coordinate)
 
     private val Char.isASymbol: Boolean
         get() = this != '.' && !this.isDigit()
-
     override fun toString() = value
 }
 
 data class Coordinate(val x: Int, val y: Int,val engine: Engine) {
     val isInEngine = x >=0 && y >= 0 && x <= engine.maxX && y <= engine.maxY
     val piece  by lazy {engine.pieceAt(x,y)}
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Coordinate
+
+        if (x != other.x) return false
+        if (y != other.y) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = x
+        result = 31 * result + y
+        return result
+    }
 }
 
 data class HorizontalRange(val x: IntRange, val y: Int, val  engine: Engine) {
