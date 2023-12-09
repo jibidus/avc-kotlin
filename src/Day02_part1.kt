@@ -6,7 +6,7 @@ fun main() {
         ) && it.requiresLessThan(blue, "blue")
     }.sumOf { it.id }
 
-    val testInputPart1 = readInput("Day02_part1_test")
+    val testInputPart1 = readInput("Day02_test")
     checkThat(answer(testInputPart1, 12, 13, 14)).isEqualTo(8)
     checkThat(answer(testInputPart1, 20, 13, 14)).isEqualTo(11)
     checkThat(answer(testInputPart1, 1, 1, 1)).isEqualTo(0)
@@ -24,6 +24,10 @@ class Game(record: String) {
     private val parsed = record.substring("Game ".length).split(":")
     val id = parsed[0].toInt()
     val setsOfCubes = parsed[1].split(";").map { SetOfCubes(it) }
+    val minimalNumberOfRedCubes = setsOfCubes.mapNotNull { it.cubesWithColor("red") }.maxOfOrNull { it.nb } ?: 0
+    val minimalNumberOfGreenCubes = setsOfCubes.mapNotNull { it.cubesWithColor("green") }.maxOfOrNull { it.nb } ?: 0
+    val minimalNumberOfBlueCubes = setsOfCubes.mapNotNull { it.cubesWithColor("blue") }.maxOfOrNull { it.nb } ?: 0
+    val power = minimalNumberOfRedCubes * minimalNumberOfGreenCubes * minimalNumberOfBlueCubes
 
     fun requiresLessThan(maxNbOfCubes: Int, color: String): Boolean =
         setsOfCubes.all { it.requiresLessThan(maxNbOfCubes, color) }
@@ -34,6 +38,8 @@ class SetOfCubes(record: String) {
     val cubes = parsed.map { Cubes(it) }
     fun requiresLessThan(maxNbOfCubes: Int, color: String): Boolean =
         cubes.filter { it.color == color }.all { it.nb <= maxNbOfCubes }
+
+    fun cubesWithColor(color: String) = cubes.firstOrNull { it.color == color }
 }
 
 // ex: "3 blue"
