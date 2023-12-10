@@ -15,5 +15,5 @@ tasks {
 }
 
 dependencies{
-    implementation("ch.tutteli.atrium:atrium-fluent:1.1.0")
+    implementation("com.willowtreeapps.assertk:assertk:0.28.0")
 }

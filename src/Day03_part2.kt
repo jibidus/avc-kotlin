@@ -1,11 +1,11 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 
 fun main() {
     fun answer(input: List<String>) = Engine(input).gearRatios.sum()
 
     val testInputPart1 = readInput("Day03_test")
-    expect(
+    assertThat(
         answer(
             """
                 ...
@@ -13,8 +13,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 ...
@@ -22,8 +22,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 .*.
@@ -31,8 +31,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 *..
@@ -40,8 +40,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 *..
@@ -49,8 +49,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 ...*4
@@ -58,8 +58,8 @@ fun main() {
                 .....
             """.trimIndent().lines()
         )
-    ).toEqual(4*91)
-    expect(
+    ).isEqualTo(4*91)
+    assertThat(
         answer(
             """
                 ...*4
@@ -67,9 +67,9 @@ fun main() {
                 *3...
             """.trimIndent().lines()
         )
-    ).toEqual(4*91+3*91)
+    ).isEqualTo(4*91+3*91)
 
-    expect(answer(testInputPart1)).toEqual(467835)
+    assertThat(answer(testInputPart1)).isEqualTo(467835)
     "Tests are successful!".println()
 
     val input = readInput("Day03")

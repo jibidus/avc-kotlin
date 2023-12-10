@@ -1,5 +1,6 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.size
 
 fun main() {
 
@@ -12,14 +13,14 @@ fun main() {
     val testInputPart1 = readInput("Day05_test")
     val almanac = Almanac.parse(testInputPart1)
     almanac.checkValidity()
-    expect(almanac.seeds).toHaveSize(4)
-    expect(almanac.mappings).toHaveSize(7)
+    assertThat(almanac.seeds).size().isEqualTo(4)
+    assertThat(almanac.mappings).size().isEqualTo(7)
     val seedToSoil = almanac.mappings.first { it.source == "seed" && it.destination == "soil" }
-    expect(seedToSoil.convert(0)).toEqual(0)
-    expect(seedToSoil.convert(51)).toEqual(53)
-    expect(seedToSoil.convert(99)).toEqual(51)
-    expect(almanac.convertSeed(79, "soil")).toEqual(81)
-    expect(answer(testInputPart1)).toEqual(35)
+    assertThat(seedToSoil.convert(0)).isEqualTo(0)
+    assertThat(seedToSoil.convert(51)).isEqualTo(53)
+    assertThat(seedToSoil.convert(99)).isEqualTo(51)
+    assertThat(almanac.convertSeed(79, "soil")).isEqualTo(81)
+    assertThat(answer(testInputPart1)).isEqualTo(35)
     "Tests are successful!".println()
 
     val input = readInput("Day05")
@@ -32,7 +33,7 @@ class Almanac {
 
     fun convertSeed(seedNumber: Long, destinationCategory: String): Long {
         val finalComponent = mappings.fold(Component(seedNumber, "seed")) { c, mapping -> mapping.convert(c) }
-        require(finalComponent.category == destinationCategory) {"Last mapper does not convert to expected category ($destinationCategory), but ti ${finalComponent.category}"}
+        require(finalComponent.category == destinationCategory) {"Last mapper does not convert to expected category ($destinationCategory), but to ${finalComponent.category}"}
         return finalComponent.number
     }
 

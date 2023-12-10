@@ -1,11 +1,11 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.*
 
 fun main() {
     fun answer(input: List<String>) = Engine(input).partNumbers.sumOf { it.value.toInt() }
 
     val testInputPart1 = readInput("Day03_test")
-    expect(
+    assertThat(
         answer(
             """
                 ...
@@ -13,8 +13,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 ...
@@ -22,8 +22,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(
             """
                 .*.
@@ -31,8 +31,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(9)
-    expect(
+    ).isEqualTo(9)
+    assertThat(
         answer(
             """
                 *..
@@ -40,8 +40,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(9)
-    expect(
+    ).isEqualTo(9)
+    assertThat(
         answer(
             """
                 *..
@@ -49,8 +49,8 @@ fun main() {
                 ...
             """.trimIndent().lines()
         )
-    ).toEqual(91)
-    expect(
+    ).isEqualTo(91)
+    assertThat(
         answer(
             """
                 *...4
@@ -58,9 +58,9 @@ fun main() {
                 .....
             """.trimIndent().lines()
         )
-    ).toEqual(91)
+    ).isEqualTo(91)
 
-    expect(answer(testInputPart1)).toEqual(4361)
+    assertThat(answer(testInputPart1)).isEqualTo(4361)
     "Tests are successful!".println()
 
     val input = readInput("Day03")

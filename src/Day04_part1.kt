@@ -1,26 +1,26 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import kotlin.math.pow
 
 fun main() {
     fun answer(input: List<String>) = input.map { Card(it) }.sumOf { it.points }
 
-    expect(
+    assertThat(
         answer(listOf("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"))
-    ).toEqual(8)
-    expect(
+    ).isEqualTo(8)
+    assertThat(
         answer(listOf("Card 1: 41 48 83 86 17 | 1"))
-    ).toEqual(0)
-    expect(
+    ).isEqualTo(0)
+    assertThat(
         answer(listOf("Card 1: 41 48 83 86 17 | "))
-    ).toEqual(0)
+    ).isEqualTo(0)
 
-    expect(
+    assertThat(
         answer(listOf("Card 1: 2 48 1 86 17 |  1  2"))
-    ).toEqual(2)
+    ).isEqualTo(2)
 
     val testInputPart1 = readInput("Day04_test")
-    expect(answer(testInputPart1)).toEqual(13)
+    assertThat(answer(testInputPart1)).isEqualTo(13)
     "Tests are successful!".println()
 
     val input = readInput("Day04")

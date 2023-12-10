@@ -1,5 +1,5 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 
 fun main() {
     fun answer(input: List<String>): Long {
@@ -9,7 +9,7 @@ fun main() {
     }
 
     val testInputPart1 = readInput("Day05_test")
-    expect(answer(testInputPart1)).toEqual(46)
+    assertThat(answer(testInputPart1)).isEqualTo(46)
     "Tests are successful!".println()
 
     val input = readInput("Day05")

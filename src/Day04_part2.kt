@@ -1,5 +1,5 @@
-import ch.tutteli.atrium.api.fluent.en_GB.*
-import ch.tutteli.atrium.api.verbs.expect
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import kotlin.math.min
 
 fun main() {
@@ -13,17 +13,17 @@ fun main() {
         return cardCopies.sumOf { it.copies }
     }
 
-    expect(
+    assertThat(
         answer(
             listOf(
                 "Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53",
                 "Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19"
             )
         )
-    ).toEqual(3)
+    ).isEqualTo(3)
 
     val testInputPart1 = readInput("Day04_test")
-    expect(answer(testInputPart1)).toEqual(30)
+    assertThat(answer(testInputPart1)).isEqualTo(30)
     "Tests are successful!".println()
 
     val input = readInput("Day04")
