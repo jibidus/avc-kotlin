@@ -93,7 +93,7 @@ data class Mapping(val source: String, val destination: String) {
         convertions.firstOrNull { it.canConvert(sourceNumber) }?.convert(sourceNumber) ?: sourceNumber
 
     fun convert(component: Component): Component {
-        require(component.category == source) { "$source to $destination cannot convert $component" }
+//        require(component.category == source) { "$source to $destination cannot convert $component" }
         return Component(convert(component.number), destination)
     }
 }
